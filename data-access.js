@@ -70,6 +70,11 @@ async function updateCustomer(updatedCustomer) {
         const updateResult = 
         await collection.updateOne(filter, setData);
         // return array [message, errMessage]
+
+        if (updateResult.matchedCount === 0) {
+            return [null, "Customer not found"];
+        }
+
         return ["one record updated", null];
     } catch (err) {
         console.log(err.message);

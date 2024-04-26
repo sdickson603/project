@@ -76,11 +76,15 @@ app.put('/customers/:id', async (req, res) => {
       // return array format [message, errMessage]
       const [message, errMessage] = await da.updateCustomer(updatedCustomer);
       if (message) {
-          res.send(message);
-      } else {
-          res.status(400);
-          res.send(errMessage);
-      }
+        res.send(message);
+    } else {
+        if (errMessage === "Customer not found") {
+            res.status(404);
+        } else {
+            res.status(400);
+        }
+        res.send(errMessage);
+    }
   }
 });
 
